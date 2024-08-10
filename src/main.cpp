@@ -75,24 +75,24 @@ void setup()
   motorB.initFOC();
   delay(100);
   // initialize sensors at PB14, PB12, PB11,PB1,  ir LED @PA_12
-  // pinMode(PA0, INPUT_ANALOG); // A1
-  // pinMode(PA1, INPUT_ANALOG);
-  // pinMode(PA2, INPUT_ANALOG);
-  // pinMode(PA3, INPUT_ANALOG);
-  // pinMode(PA4, INPUT_ANALOG);
-  // pinMode(PB0, INPUT_ANALOG);
-  // pinMode(PB1, INPUT_ANALOG); // Sen1 /A7
-  // pinMode(PB2, INPUT_ANALOG); // Sen2 /A8
+  pinMode(PA0, INPUT_ANALOG); // A1
+  pinMode(PA1, INPUT_ANALOG);
+  pinMode(PA2, INPUT_ANALOG);
+  pinMode(PA3, INPUT_ANALOG);
+  pinMode(PA4, INPUT_ANALOG);
+  pinMode(PB0, INPUT_ANALOG);
+  pinMode(PB1, INPUT_ANALOG); // Sen1 /A7
+  pinMode(PB2, INPUT_ANALOG); // Sen2 /A8
   pinMode(PC13, OUTPUT);
   digitalWrite(PC13, 1);
    pinMode(PB10, OUTPUT_OPEN_DRAIN); //R
    pinMode(PB15, OUTPUT_OPEN_DRAIN); //G
   // pinMode(PA13, OUTPUT_OPEN_DRAIN); //B
-  // pinMode(PC15, OUTPUT); // IRled GP2
-  // pinMode(PC14, OUTPUT); // IRled GP1 SENsled 1, 2
+  pinMode(PC15, OUTPUT); // IRled GP2
+  pinMode(PC14, OUTPUT); // IRled GP1 SENsled 1, 2
   
   //init IR led 1
-  // digitalWrite(PA4, 0);
+  digitalWrite(PA4, 1);
   hs.begin(115200);
   hs.println("LFv7---");
   motorB.useMonitoring(hs);
