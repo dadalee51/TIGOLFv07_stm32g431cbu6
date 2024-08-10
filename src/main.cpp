@@ -5,10 +5,10 @@
  * 
 */
 // MA
-// TwoWire i2c1 = TwoWire(PB7, PA15); // sda, scl
-// MagneticSensorI2C sensorA = MagneticSensorI2C(AS5600_I2C);
-// BLDCMotor motorA = BLDCMotor(7);
-// BLDCDriver3PWM driverA = BLDCDriver3PWM(PA8, PA9, PA10, PB13);
+TwoWire i2c1 = TwoWire(PB7, PA15); // sda, scl
+MagneticSensorI2C sensorA = MagneticSensorI2C(AS5600_I2C);
+BLDCMotor motorA = BLDCMotor(7);
+BLDCDriver3PWM driverA = BLDCDriver3PWM(PA8, PA9, PA10, PB13);
 // MB
 TwoWire i2c2 = TwoWire(PF0, PC4); // sda2, scl2
 MagneticSensorI2C sensorB = MagneticSensorI2C(AS5600_I2C);
@@ -28,25 +28,25 @@ void setup()
   //analogWrite(PA13, 0x03);
 
   // MA
-  // sensorA.init(&i2c1);
-  // motorA.linkSensor(&sensorA);
-  // driverA.voltage_power_supply = 8;
-  // driverA.init();
-  // motorA.linkDriver(&driverA);
-  // motorA.foc_modulation = FOCModulationType::SpaceVectorPWM;
-  // // motor.controller = MotionControlType::angle;
-  // motorA.controller = MotionControlType::velocity;
-  // motorA.PID_velocity.P = 0.2f;
-  // motorA.PID_velocity.I = 0.1f;
-  // motorA.PID_velocity.D = 0;
-  // motorA.voltage_limit = 8;
-  // motorA.LPF_velocity.Tf = 0.01f;
-  // motorA.P_angle.P = 20;
-  // motorA.velocity_limit = 100;
-  // motorA.PID_velocity.output_ramp = 1000;
+  sensorA.init(&i2c2);
+  motorA.linkSensor(&sensorA);
+  driverA.voltage_power_supply = 8;
+  driverA.init();
+  motorA.linkDriver(&driverA);
+  motorA.foc_modulation = FOCModulationType::SpaceVectorPWM;
+  // motor.controller = MotionControlType::angle;
+  motorA.controller = MotionControlType::velocity;
+  motorA.PID_velocity.P = 0.2f;
+  motorA.PID_velocity.I = 0.1f;
+  motorA.PID_velocity.D = 0;
+  motorA.voltage_limit = 8;
+  motorA.LPF_velocity.Tf = 0.01f;
+  motorA.P_angle.P = 20;
+  motorA.velocity_limit = 100;
+  motorA.PID_velocity.output_ramp = 1000;
 
   // MB
-  sensorB.init(&i2c2);
+  sensorB.init(&i2c1);
   motorB.linkSensor(&sensorB);
   driverB.voltage_power_supply = 8;
   driverB.init();
@@ -65,13 +65,13 @@ void setup()
 
 
   // init and FOC area
-  // motorA.init();
-  // delay(100);
+  motorA.init();
+  delay(100);
   motorB.init();
   delay(100);
   
-  // motorA.initFOC();
-  // delay(100);
+  motorA.initFOC();
+  delay(100);
   motorB.initFOC();
   delay(100);
   // initialize sensors at PB14, PB12, PB11,PB1,  ir LED @PA_12
@@ -83,7 +83,8 @@ void setup()
   // pinMode(PB0, INPUT_ANALOG);
   // pinMode(PB1, INPUT_ANALOG); // Sen1 /A7
   // pinMode(PB2, INPUT_ANALOG); // Sen2 /A8
-  
+  pinMode(PC13, OUTPUT);
+  digitalWrite(PC13, 1);
    pinMode(PB10, OUTPUT_OPEN_DRAIN); //R
    pinMode(PB15, OUTPUT_OPEN_DRAIN); //G
   // pinMode(PA13, OUTPUT_OPEN_DRAIN); //B
@@ -96,6 +97,8 @@ void setup()
   hs.println("LFv7---");
   motorB.useMonitoring(hs);
   _delay(100);
+
+
 }
 long a1 = 0;
 long a2 = 0;
@@ -106,19 +109,19 @@ int g_switch = 0;
 void loop()
 {
 
-  // motorA.loopFOC();
+  motorA.loopFOC();
   motorB.loopFOC();
 
-  // motorA.move(target_velocity);
+  motorA.move(target_velocity);
   motorB.move(target_velocity);
   counter_g++;
-  if(counter_g> 1){
+  if(counter_g> 100){
     g_switch=~g_switch;
     digitalWrite(PB15, g_switch);
     counter_g=0;
   }
   
-  // motorB.monitor();
+  motorB.monitor();
   
   //delay(500);
   // hs.println("hello");
