@@ -92,7 +92,7 @@ void setup()
   pinMode(PC14, OUTPUT); // IRled GP1 SENsled 1, 2
   
   //init IR led 1
-  digitalWrite(PA4, 1);
+  digitalWrite(PC15, 1);
   hs.begin(115200);
   hs.println("LFv7---");
   motorB.useMonitoring(hs);
